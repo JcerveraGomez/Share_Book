@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { from } from "rxjs";
-import { IUser, ILibro} from "../Interfaces";
-import {AngularFireDatabase} from '@angular/fire/database';
+import { IUser, ILibro, IUser2, ILibro2} from "../Interfaces";
+
+import {AngularFireDatabase, AngularFireList, AngularFireObject} from '@angular/fire/database';
 import firebase from 'firebase';
 
 
@@ -9,8 +10,9 @@ import firebase from 'firebase';
 @Injectable()
 
 export class LibroService{  
-    Productos: (ILibro| IUser)[]=[];
+      Productos: (ILibro| IUser)[]=[];
 constructor(private _db: AngularFireDatabase){
+  
 
 
 }
@@ -22,15 +24,26 @@ GetUsers() : firebase.database.Reference{
   let ref =this._db.database.ref("users")
   return ref;
 }
-setUser(producto: IUser){
+
+setUser(producto: IUser2){
 let ref=this._db.database.ref("users");
 ref.push(producto);
 
 }
-setLibro(producto: ILibro){
+setLibro(producto: ILibro2){
 let ref=this._db.database.ref("libros");
 ref.push(producto);
 
 }
-}
+
+deleteUser(userid){
+  this._db.database.ref('users/'+userid).remove();  
+  }
+  deleteBook(userid){
+    this._db.database.ref('libros/'+userid).remove();  
+    }
+  
+  }
+
+
 

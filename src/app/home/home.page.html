@@ -5,7 +5,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="Login">
+  <div  *ngIf="match == false">
     <strong>Login</strong>
 
     <ion-item>
@@ -18,7 +18,27 @@
       <ion-input [(ngModel)]="pwdInput"></ion-input>
     </ion-item>
 
-    <strong>{{pwdInput}}</strong>
+    <ion-item>
+        <ion-button (click)="matchLogin()" >Login</ion-button>
+
+    </ion-item>
+
+    <ion-item *ngif="match == true">
+      <ion-button (click)="matchLogin()" >Login</ion-button>
+
+  </ion-item>
+
+  </div>
+  <div  *ngIf="match == true"> 
+
+    <ion-item >
+      <ion-button [routerLink]="['/libros/',useridInput]"  >Gestion Libros</ion-button>
+
+  </ion-item>
+  <ion-item >
+      <ion-button [routerLink]="['/usuario-info/',useridInput]" >Gestion Usuario</ion-button>
+
+  </ion-item>
 
   </div>
 </ion-content>
