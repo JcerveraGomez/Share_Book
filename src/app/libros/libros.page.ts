@@ -26,6 +26,7 @@ lugarRecogidaInput
 propietarioInput
 idLibroInput
 key
+cargado=false
 visibleInput=false
 visibleMenu=true
 visibleUpdate=false
@@ -68,14 +69,20 @@ visibleUpdate=false
 
     this.Libros.forEach(libro =>{
       if(libro.key==key){
+
+     
       this.titulo=libro.titulo
+      this.idLibro=libro.idLibro
+      this.categoria=libro.categoria
+      this.editorial=libro.editorial
+      this.propietario=libro.propietario
+      this.lugarRecogida=libro.lugar_Recogida
       console.log( this.titulo)
     
       }
     })
-    this
     this.visibleMenu=false;
-    this.visibleInput=true;
+    this.visibleUpdate=true;
 
     let libroInsert:ILibro2 ={
       "idLibro": this.idLibroInput,
@@ -86,7 +93,7 @@ visibleUpdate=false
       "lugar_Recogida":this.lugarRecogidaInput,
 }
     console.log("he entrado")
-    let ref = this._Libroservice.deleteBook(key);
+   let ref = this._Libroservice.deleteBook(key);
     let ref1 = this._Libroservice.setLibro(libroInsert);
     
   }
