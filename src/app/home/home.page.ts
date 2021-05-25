@@ -13,11 +13,11 @@ import { ToastController } from '@ionic/angular';
 export class HomePage {
 
 
-  useridInput: string;
-  pwdInput: string;
-  Users: (IUser)[] = [];
+  // useridInput: string;
+  // pwdInput: string;
+  // Users: (IUser)[] = [];
+  // match=false
   errorMessage: string;
-  match=false
   registro=false
   login=true
   userIdRegistro:string;
@@ -25,7 +25,6 @@ export class HomePage {
   preferenciasRegistro:string;
   nombreRegistro:string;
   tlfRegistro:number;
-
   constructor(private _toastCtrl: ToastController ,private _Libroservice: LibroService) { }
 
   ngOnInit() {
@@ -68,22 +67,24 @@ export class HomePage {
     toast.present();
 
 }
-   matchLogin() {
+//esto tienes que no subirlo que es el login 
+  //  matchLogin() {
     
-    this.Users.forEach(user => {
-      if ((user.userid == this.useridInput) && (user.pwd == this.pwdInput)) {
-        this.match = true
-        console.log("match")
-        this.CorrectToast(); 
+  //   this.Users.forEach(user => {
+  //     if ((user.userid == this.useridInput) && (user.pwd == this.pwdInput)) {
+  //       this.match = true
+  //       console.log("match")
+  //       this.CorrectToast(); 
   
-      } else {
-        this.errorMessage = "Contraseña o ususario incorrectos"
-        this.presentToast();
-        this.match=false
-      } 
-    });
+  //     } else {
+  //       this.errorMessage = "Contraseña o ususario incorrectos"
+  //       this.presentToast();
+  //       this.match=false
+  //     } 
+  //   });
     
-  }
+  // }
+  // 
   registroVisibility(){
 
     this.registro=true;
