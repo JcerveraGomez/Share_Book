@@ -15,7 +15,7 @@ export class HomePage {
 
   // useridInput: string;
   // pwdInput: string;
-  // Users: (IUser)[] = [];
+  Users: (IUser)[] = [];
   // match=false
   errorMessage: string;
   registro=false
