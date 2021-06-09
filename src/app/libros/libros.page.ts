@@ -32,6 +32,8 @@ visibleMenu=true
 visibleUpdate=false
 useridFilter
 categoriaFilter
+booksMine=false
+  contador: number;
 
 
   constructor(private _toastCtrl: ToastController ,private _Libroservice: LibroService,private _activateRoute: ActivatedRoute) {
@@ -103,8 +105,9 @@ categoriaFilter
       
   }
   changeVisibilityMenuInput(){   
+    
     let libroInsert:ILibro2 ={
-      "idLibro": this.idLibroInput,
+      "idLibro": this.Libros.length+1,
       "titulo": this.tituloInput,
       "categoria": this.categoriaInput,
       "editorial": this.editorialInput,
@@ -119,11 +122,13 @@ categoriaFilter
       this.visibleMenu=true;
       location.reload();
     }
+    this.contador++
 
 
       
   }
   myBooks(){
+    this.booksMine =true
     this.Libros = []
     this.userid =this._activateRoute.snapshot.paramMap.get('useridInput');
     console.log(this.userid)
@@ -151,6 +156,7 @@ categoriaFilter
     })
   }
   allBooks(){
+    this.booksMine = false;
     this.Libros = []
     this.userid =this._activateRoute.snapshot.paramMap.get('useridInput');
     console.log(this.userid)
