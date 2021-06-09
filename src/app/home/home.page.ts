@@ -13,10 +13,10 @@ import { ToastController } from '@ionic/angular';
 export class HomePage {
 
 
-  // useridInput: string;
-  // pwdInput: string;
+  useridInput: string;
+  pwdInput: string;
   Users: (IUser)[] = [];
-  // match=false
+  match=false
   errorMessage: string;
   registro=false
   login=true
@@ -33,7 +33,7 @@ export class HomePage {
     ref.once("value", snapshot => {
 
       snapshot.forEach(child => {
-        console.log("he encontrado " + child.val().userid);
+        console.log("he encontrado " + child.val().userid + child.val().pwd );
         let user: IUser = {
           "userid": child.val().userid,
           "pwd": child.val().pwd,
@@ -43,6 +43,7 @@ export class HomePage {
           "key": child.key
         }
         this.Users.push(user)
+        console.log(this.Users)
       })
     })
 
@@ -58,6 +59,7 @@ export class HomePage {
 
 }
  async CorrectToast() {
+   
     const toast = await this._toastCtrl.create({
         message: 'Login Correcto',
         duration: 3000,
@@ -67,24 +69,28 @@ export class HomePage {
     toast.present();
 
 }
-//esto tienes que no subirlo que es el login 
-  //  matchLogin() {
+   matchLogin() {
     
-  //   this.Users.forEach(user => {
-  //     if ((user.userid == this.useridInput) && (user.pwd == this.pwdInput)) {
-  //       this.match = true
-  //       console.log("match")
-  //       this.CorrectToast(); 
+    this.Users.forEach(user => {
+      if ((user.userid == this.useridInput) && (user.pwd == this.pwdInput)) {
+        this.match = true
+        console.log("match")
+        this.CorrectToast(); 
   
-  //     } else {
-  //       this.errorMessage = "Contraseña o ususario incorrectos"
-  //       this.presentToast();
-  //       this.match=false
-  //     } 
-  //   });
+      }     
+      
+    });
+
+    if(this.match==false){
+      
+        this.errorMessage = "Contraseña o ususario incorrectos"
+          this.presentToast();
+          this.match=false
+        
+    }
     
-  // }
-  // 
+  }
+  
   registroVisibility(){
 
     this.registro=true;
@@ -98,20 +104,23 @@ export class HomePage {
         "preferencias":this.preferenciasRegistro,
     }
 
+
     let ref1 = this._Libroservice.setUser(userInsert);
     this.errorMessage = "Usuario insertado"
     this.presentToast();
     this.registro=false;
-    this.login=true;     
+    this.login=true;
+    this.userIdRegistro="";
+    this.pwdRegistro="";
+    this.preferenciasRegistro="";
+    this.nombreRegistro="";
+    this.tlfRegistro=null;     
     location.reload()
 
     }
    
      
       
-  }
-  changeRegistroVisibility(){
-
   }
   
   
