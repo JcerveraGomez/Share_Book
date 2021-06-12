@@ -34,6 +34,7 @@ useridFilter
 categoriaFilter
 booksMine=false
   contador: number;
+  errorMessage: string;
 
 
   constructor(private _toastCtrl: ToastController ,private _Libroservice: LibroService,private _activateRoute: ActivatedRoute) {
@@ -65,10 +66,19 @@ booksMine=false
 
     })
   }
-  
+  async presentToast() {
+    const toast = await this._toastCtrl.create({
+        message: this.errorMessage,
+        duration: 3000,
+        position: 'bottom'
+
+    });
+    toast.present();
+
+}
   updateBook(key){ 
-
-
+    this.visibleMenu=false;
+    this.visibleUpdate=true;
     this.Libros.forEach(libro =>{
       if(libro.key==key){
 
@@ -79,29 +89,18 @@ booksMine=false
       this.editorial=libro.editorial
       this.propietario=libro.propietario
       this.lugarRecogida=libro.lugar_Recogida
+      this.key=key
       console.log( this.titulo)
     
       }
-    })
-    this.visibleMenu=false;
-    this.visibleUpdate=true;
-
-    let libroInsert:ILibro2 ={
-      "idLibro": this.idLibroInput,
-      "titulo": this.tituloInput,
-      "categoria": this.categoriaInput,
-      "editorial": this.editorialInput,
-      "propietario": this.propietarioInput,
-      "lugar_Recogida":this.lugarRecogidaInput,
-}
-    console.log("he entrado")
-   let ref = this._Libroservice.deleteBook(key);
-    let ref1 = this._Libroservice.setLibro(libroInsert);
+    }) 
+   
     
   }
   deleteBook(key){   
     console.log(key)
     let ref = this._Libroservice.deleteBook(key);
+    window.location.reload(true);
       
   }
   changeVisibilityMenuInput(){   
@@ -126,7 +125,37 @@ booksMine=false
 
 
       
+  } 
+  changeVisibilityMenuUpdate(){   
+    
+    if(this.idLibroInput == null || this.tituloInput == null || this.categoriaInput == null || this.editorialInput == null || this.propietarioInput == null || this.lugarRecogidaInput == null ){
+      this.errorMessage = "debes introducir todos los campos"
+      this.presentToast();
+    }else{ 
+    console.log(this.key)
+    
+    let libroInsert:ILibro2 ={
+      "idLibro": this.Libros.length+1,
+      "titulo": this.tituloInput,
+      "categoria": this.categoriaInput,
+      "editorial": this.editorialInput,
+      "propietario": this.propietarioInput,
+      "lugar_Recogida":this.lugarRecogidaInput,
+}
+  this.visibleInput=false;
+  this.visibleMenu=true;
+  this.visibleUpdate=false;
+    let ref2 = this._Libroservice.deleteBook(this.key);
+    let ref1 = this._Libroservice.setLibro(libroInsert);  
+    location.reload();
+
+ 
+    this.contador++
+
+
+      
   }
+}
   myBooks(){
     this.booksMine =true
     this.Libros = []
